@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const Home: React.FC = ( ) => {
 
   return (
-    <div> 0 </div>
+    <StyledSection> 0 </StyledSection>
   );
 }
 
