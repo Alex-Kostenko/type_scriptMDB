@@ -5,12 +5,9 @@ import {
   Route,
 } from "react-router-dom";
 import { Container } from 'semantic-ui-react';
-
 import Header from "../components/header";
-
 import routs from "./routes";
 import Loader from '../components/loader'
-
 
 
 const RoutesPage = () => {

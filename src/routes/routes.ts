@@ -1,5 +1,7 @@
-import Home from '../pages/home';
+import { lazy } from 'react'
 import { rout } from '../models/routs'
+const Home = lazy(() => import('../pages/home'));
+const MovieList = lazy(() => import('../pages/movieList'));
 
 const routs: rout[] = [
   {
@@ -11,7 +13,7 @@ const routs: rout[] = [
   },
   {
     path: '/movie',
-    component: Home,
+    component: MovieList,
     exact: true,
     name: 'Movie',
     _showOnHeader: true
