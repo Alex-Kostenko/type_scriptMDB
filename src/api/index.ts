@@ -1,8 +1,8 @@
 import axios from 'axios';
-import {post} from '../models/interfaces'
+import {searchRes} from '../models/interfaces'
 import API_KEY, {domen} from '../API_KEY';
 
-export const searchMovie = (value: string, setState: Function, page: number = 1,currentData?: post[], setPage?: Function) => {
+export const searchMovie = (value: string, setState: Function, page: number = 1, currentData?: searchRes , setPage?: Function) => {
   const authAxios = axios.create();
   
 
@@ -11,10 +11,11 @@ export const searchMovie = (value: string, setState: Function, page: number = 1,
       if( res.status === 200 ) {
         if (setPage !== undefined && currentData !== undefined) {
           setPage(page + 1)
-          console.log();
-          return setState(currentData.concat(res.data.results))
+          currentData.results = currentData.results.concat(res.data.results)
+          console.log(currentData);
+          return setState(currentData)
         }
-        return setState(res.data.results)
+        return setState(res.data)
       }
       alert('Error fetch');
     })

@@ -18,7 +18,6 @@ export interface searchRes {
   results: post[];
 }
 
-
 export interface post {
   popularity: number;
   vote_count: number;
