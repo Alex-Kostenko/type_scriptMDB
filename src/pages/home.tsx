@@ -1,15 +1,18 @@
-import React, {useState, useEffect, ChangeEvent} from 'react';
+import React, { useState, useEffect, ChangeEvent} from 'react';
 import { Segment, Input, Item } from 'semantic-ui-react';
 import styled from 'styled-components';
 import StarRatingComponent from 'react-star-rating-component';
+import InfiniteScroll from 'react-infinite-scroller';
 
 import { genre as genryInt, post } from '../models/interfaces'
 import { searchMovie, getGenre } from '../api'
 import RenderTags from '../components/tags'
+import Loader from '../components/loader'
 
 
 const Home: React.FC = ( ) => {
   const [data, setData] = useState<post[]>([]);
+  const [page, setPage] = useState(1);
   const [genre, setGenre] = useState<genryInt[]>([]);
   const [search, setSearch] = useState<string>('');
 
@@ -35,35 +38,44 @@ const Home: React.FC = ( ) => {
       </Paper>
       <Item.Group>
         <Post>
-          {data.length > 0 && data.map(item =>
-            <Paper key={item.id}>
-                {console.log(item)}
-              <img 
-                src={
-                  item.poster_path ? `http://image.tmdb.org/t/p/w342${item.poster_path}` 
-                  : 'https://via.placeholder.com/342x500'} 
-                alt="" 
-                style={{marginRight: '14px'}}
-              />
-              <Item.Content>
-                <Title as='a'> 
-                  <div style={{marginBottom: '10px'}}>{item.title}</div>
-                  <StarRatingComponent 
-                    value={item.vote_average / 2}
-                    editing={false}
-                    starCount={5}
-                    name='rating'
-                  />
-                </Title>
-                <RenderTags
-                  tagList={genre}
-                  idGenreItem={item.genre_ids}
+          <InfiniteScroll
+            pageStart={1}
+            loadMore={() => {
+              data.length > 0 && searchMovie(search, setData, page + 1, data , setPage);
+            }}
+            hasMore={true}
+            loader={data.length > 0 ? <Loader key={'loader'} /> : <React.Fragment key={'loader'}/>}
+          >
+            {data.length > 0 && data.map(item =>
+              <Paper key={item.id}>
+                <img
+                  src={
+                    item.poster_path ? `http://image.tmdb.org/t/p/w342${item.poster_path}`
+                      : 'https://via.placeholder.com/342x500'}
+                  alt=""
+                  style={{ marginRight: '14px' }}
                 />
-                <Text> Date of release: {item.release_date} </Text>
-                <Text> {item.overview} </Text>
-              </Item.Content>
-            </Paper>
+                <Item.Content>
+                  <Title as='a'>
+                    <div style={{ marginBottom: '10px' }}>{item.title}</div>
+                    <StarRatingComponent
+                      value={item.vote_average / 2}
+                      editing={false}
+                      starCount={5}
+                      name='rating'
+                    />
+                  </Title>
+                  <RenderTags
+                    tagList={genre}
+                    idGenreItem={item.genre_ids}
+                  />
+                  <Text> Date of release: {item.release_date} </Text>
+                  <Text> {item.overview} </Text>
+                </Item.Content>
+              </Paper>
             )}
+          </InfiniteScroll>
+          
         </Post>
       </Item.Group>
       

@@ -13,7 +13,7 @@ const RenderTags: React.FC<RenderTagsProps> = ({tagList, idGenreItem} ) => {
     <StyledSection>
       {idGenreItem.map(item => 
         tagList.map((tag ) => 
-          item === tag.id ? <Tag> {tag.name} </Tag> : null
+          item === tag.id ? <Tag key={tag.id}> {tag.name} </Tag> : null
         ))}
     </StyledSection>
   );

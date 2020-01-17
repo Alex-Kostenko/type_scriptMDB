@@ -11,6 +11,13 @@ export interface genre {
   name: string
 }
 
+export interface searchRes {
+  page: number;
+  total_results: number;
+  total_pages: number;
+  results: post[];
+}
+
 
 export interface post {
   popularity: number;
