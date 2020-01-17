@@ -1,5 +1,5 @@
 import { lazy } from 'react'
-import { rout } from '../models/inrerfaces'
+import { rout } from '../models/interfaces'
 const Home = lazy(() => import('../pages/home'));
 const MovieList = lazy(() => import('../pages/movieList'));
 

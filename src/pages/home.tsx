@@ -1,16 +1,16 @@
 import React, {useState, useEffect, ChangeEvent} from 'react';
-import { Segment, Input, Button, Item } from 'semantic-ui-react';
+import { Segment, Input, Item } from 'semantic-ui-react';
 import styled from 'styled-components';
 import StarRatingComponent from 'react-star-rating-component';
 
-import { genre, post } from '../models/inrerfaces'
+import { genre as genryInt, post } from '../models/interfaces'
 import { searchMovie, getGenre } from '../api'
 import RenderTags from '../components/tags'
 
 
 const Home: React.FC = ( ) => {
   const [data, setData] = useState<post[]>([]);
-  const [genre, setGenre] = useState<genre[]>([]);
+  const [genre, setGenre] = useState<genryInt[]>([]);
   const [search, setSearch] = useState<string>('');
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const Home: React.FC = ( ) => {
                 />
                 <Item.Content>
                   <Title as='a'> 
-                    {item.title}
+                    <div style={{marginBottom: '10px'}}>{item.title}</div>
                     <StarRatingComponent 
                       value={item.vote_average / 2}
                       editing={false}
@@ -105,6 +105,7 @@ const Title = styled(Item.Header)`
   display: flex;
   justify-content: space-between;
   margin: 5px 0 15px 0;
+  flex-wrap: wrap;
 `;
 
 const Text = styled(Item.Meta)`
