@@ -19,7 +19,7 @@ const Home: React.FC = ( ) => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
-  } 
+  }
 
   return (
     <StyledSection> 
@@ -32,49 +32,38 @@ const Home: React.FC = ( ) => {
           placeholder='Search' 
           onChange={handleChange}
         />
-        {/* <select>
-          {genre.map(item => 
-            <option value={item.id}>
-              {item.name}
-            </option>
-          )}
-        </select> 
-        <Button>Genre</Button>
-        <Button>Genre</Button> */}
       </Paper>
       <Item.Group>
         <Post>
-          {data.length >= 10 && data.map(item => {
-            return (
-              <Paper>
-                  {console.log(item)}
-                <img 
-                  src={
-                    item.poster_path ? `http://image.tmdb.org/t/p/w342${item.poster_path}` 
-                    : 'https://via.placeholder.com/342x500'} 
-                  alt="" 
-                  style={{marginRight: '14px'}}
-                />
-                <Item.Content>
-                  <Title as='a'> 
-                    <div style={{marginBottom: '10px'}}>{item.title}</div>
-                    <StarRatingComponent 
-                      value={item.vote_average / 2}
-                      editing={false}
-                      starCount={5}
-                      name='rating'
-                    />
-                  </Title>
-                  <RenderTags
-                    tagList={genre}
-                    idGenreItem={item.genre_ids}
+          {data.length > 0 && data.map(item =>
+            <Paper key={item.id}>
+                {console.log(item)}
+              <img 
+                src={
+                  item.poster_path ? `http://image.tmdb.org/t/p/w342${item.poster_path}` 
+                  : 'https://via.placeholder.com/342x500'} 
+                alt="" 
+                style={{marginRight: '14px'}}
+              />
+              <Item.Content>
+                <Title as='a'> 
+                  <div style={{marginBottom: '10px'}}>{item.title}</div>
+                  <StarRatingComponent 
+                    value={item.vote_average / 2}
+                    editing={false}
+                    starCount={5}
+                    name='rating'
                   />
-                  <Text> Date of release: {item.release_date} </Text>
-                  <Text> {item.overview} </Text>
-                </Item.Content>
-              </Paper>
-            )
-          })}
+                </Title>
+                <RenderTags
+                  tagList={genre}
+                  idGenreItem={item.genre_ids}
+                />
+                <Text> Date of release: {item.release_date} </Text>
+                <Text> {item.overview} </Text>
+              </Item.Content>
+            </Paper>
+            )}
         </Post>
       </Item.Group>
       

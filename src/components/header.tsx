@@ -19,15 +19,18 @@ const Header: React.FC = () =>  {
   return (
     <Menu>
       {routs.map(item => 
-        item._showOnHeader && <Menu.Item
-          name={item.path}
-          active={activeItem === item.path}
-          onClick={() => handleItemClick(item.path)}
-        >
-          <Link to={item.path}>
-            {item.name}
-          </Link>
-        </Menu.Item>)
+        item._showOnHeader && 
+          <Link to={item.path} key={item.path}>
+            <Menu.Item
+              
+              name={item.path}
+              active={activeItem === item.path}
+              onClick={() => handleItemClick(item.path)}
+              as="div"
+            >
+              {item.name}
+            </Menu.Item>
+          </Link>)
       }
     </Menu>
   )
