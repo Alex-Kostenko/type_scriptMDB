@@ -12,7 +12,6 @@ export const searchMovie = (value: string, setState: Function, page: number = 1,
         if (setPage !== undefined && currentData !== undefined) {
           setPage(page + 1)
           currentData.results = currentData.results.concat(res.data.results)
-          console.log(currentData);
           return setState(currentData)
         }
         return setState(res.data)
@@ -32,4 +31,16 @@ export const getGenre = (setState: Function) => {
       }
       alert('Error fetch');
     })
+}
+
+export const getMovieById = (id: number) => {
+  const authAxios = axios.create();
+
+  return authAxios.get(`${domen}/3/movie/${id}?language=en-US&api_key=${API_KEY}`)
+    .then(res => {
+      if( res.status === 200 ) {
+        return Promise.all([res.data])
+      }
+    })
+    .catch(() => alert('Error fetch'))
 }

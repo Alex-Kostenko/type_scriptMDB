@@ -31,7 +31,7 @@ const Home: React.FC<any> = (props: propsType) => {
     } else {
       getGenre(setGenre);
     }
-  }, []);
+  }, [props.location.search]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
@@ -64,8 +64,6 @@ const Home: React.FC<any> = (props: propsType) => {
             pageStart={1}
             loadMore={() => {
               const nextPage = page + 1;
-              // get Promise from service
-              // and subscribe to it here
               searchMovie(searchValue, setData, nextPage, data , setPage);
             }}
             hasMore={data.total_pages > page}
