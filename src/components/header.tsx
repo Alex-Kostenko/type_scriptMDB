@@ -9,11 +9,11 @@ const Header: React.FC = () =>  {
   const [ activeItem, setActiveItem ] = useState('');
 
   const handleItemClick = (value: string) => {
-    setActiveItem(value)
+    setActiveItem(value);
   };
 
   useEffect(() => {
-    setActiveItem(location)
+    setActiveItem(location);
    }, [location]);
   
   return (

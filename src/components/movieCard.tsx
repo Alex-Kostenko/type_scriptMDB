@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Segment, Input, Item } from 'semantic-ui-react';
+import { Segment, Item } from 'semantic-ui-react';
 import StarRatingComponent from 'react-star-rating-component';
 
 import RenderTags from '../components/tags';
@@ -11,33 +11,17 @@ interface MovieCardProps {
   genre: genre[];
 }
 
+const IMAGE_FALLBACK = 'https://via.placeholder.com/342x500';
+
 const MovieCard: React.FC<MovieCardProps> = ({ item, genre }) => {
+  const getImageFallback = (url: post["poster_path"]) => {
+    return url || IMAGE_FALLBACK;
+  }
 
-  const Paper = styled(Segment)`
-    width: 100%;
-    display: flex;
-  `;
-
-  const Title = styled(Item.Header)`
-    font-size: 20pt;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    margin: 5px 0 15px 0;
-    flex-wrap: wrap;
-  `;
-
-    const Text = styled(Item.Meta)`
-    font-size: 14pt !important;
-    line-height: 1.3em !important;
-  `;
-
-  return(
+  return (
     <Paper key={item.id}>
       <img
-        src={
-          item.poster_path ? `http://image.tmdb.org/t/p/w342${item.poster_path}`
-            : 'https://via.placeholder.com/342x500'}
+        src={getImageFallback(item.poster_path && `http://image.tmdb.org/t/p/w342${item.poster_path}`)}
         alt=""
         style={{ marginRight: '14px' }}
       />
@@ -61,5 +45,24 @@ const MovieCard: React.FC<MovieCardProps> = ({ item, genre }) => {
     </Paper>
   );
 }
+
+const Paper = styled(Segment)`
+  width: 100%;
+  display: flex;
+`;
+
+const Title = styled(Item.Header)`
+  font-size: 20pt;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0 15px 0;
+  flex-wrap: wrap;
+`;
+
+const Text = styled(Item.Meta)`
+  font-size: 14pt !important;
+  line-height: 1.3em !important;
+`;
 
 export default MovieCard;

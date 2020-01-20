@@ -34,3 +34,18 @@ export interface post {
   overview: string;
   release_date: string
 }
+
+export interface withRouterProps {
+  history: {};
+  location: location;
+  match: {};
+  staticContext: any;
+}
+
+export interface location {
+  pathname: string;
+  search: string;
+  hash: string;
+  state: {} | null | undefined;
+  key: string;
+}

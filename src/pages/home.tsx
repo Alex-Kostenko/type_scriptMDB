@@ -2,34 +2,42 @@ import React, { useState, useEffect, ChangeEvent} from 'react';
 import { Segment, Input, Item } from 'semantic-ui-react';
 import styled from 'styled-components';
 import InfiniteScroll from 'react-infinite-scroller';
+import { withRouter } from 'react-router';
 
-import { genre as genryInt, searchRes } from '../models/interfaces'
-import { searchMovie, getGenre } from '../api'
-import Loader from '../components/loader'
-import MovieCard from '../components/movieCard'
+import { genre as genryInt, searchRes, withRouterProps } from '../models/interfaces';
+import { searchMovie, getGenre } from '../api';
+import Loader from '../components/loader';
+import MovieCard from '../components/movieCard';
+
+interface propsType extends withRouterProps {
+  [key: string]: any;
+};
 
 
-const Home: React.FC = ( ) => {
+const Home: React.FC<any> = (props: propsType) => {
+  console.log(props.location.pathname);
+
   const [data, setData] = useState<searchRes>();
   const [page, setPage] = useState<number>(1);
   const [genre, setGenre] = useState<genryInt[]>([]);
-  const [search, setSearch] = useState<string>('');
+  const [searchValue, setSearchValue] = useState<string>('');
 
   useEffect(() => {
-    getGenre(setGenre)
-  }, [])
+    getGenre(setGenre);
+  }, []);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
+    setSearchValue(e.target.value);
   }
 
   return (
     <StyledSection> 
-      <Paper >
-        <Search 
+      <Paper>
+        <SearchInput
+          value={searchValue}
           action={{
             icon: "search",
-            onClick: () => searchMovie(search, setData)
+            onClick: () => searchMovie(searchValue, setData)
           }}
           placeholder='Search' 
           onChange={handleChange}
@@ -40,14 +48,17 @@ const Home: React.FC = ( ) => {
           {data !== undefined && <InfiniteScroll
             pageStart={1}
             loadMore={() => {
-              searchMovie(search, setData, page + 1, data , setPage);
+              const nextPage = page + 1;
+              // get Promise from service
+              // and subscribe to it here
+              searchMovie(searchValue, setData, nextPage, data , setPage);
             }}
-            hasMore={data.total_pages > page ? true : false}
+            hasMore={data.total_pages > page}
             loader={<Loader key={'loader'} />}
           >
             Total results: {data.total_results}
             {data?.results.map(item =>
-              <MovieCard item={item} genre={genre}/>
+              <MovieCard key={item.id} item={item} genre={genre} />
             )}
           </InfiniteScroll>
           }
@@ -72,11 +83,11 @@ const Paper = styled(Segment)`
 
 const Post = styled(Item)`
   display: flex;
-  flex-direction: column
+  flex-direction: column;
 `;
 
-const Search = styled(Input)`
+const SearchInput = styled(Input)`
   width: 100%;
 `;
 
-export default Home;
+export default withRouter(Home);
