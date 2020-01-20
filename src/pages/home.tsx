@@ -3,6 +3,7 @@ import { Segment, Input, Item } from 'semantic-ui-react';
 import styled from 'styled-components';
 import InfiniteScroll from 'react-infinite-scroller';
 import { withRouter } from 'react-router';
+import { useHistory } from "react-router-dom";
 
 import { genre as genryInt, searchRes, withRouterProps } from '../models/interfaces';
 import { searchMovie, getGenre } from '../api';
@@ -15,7 +16,7 @@ interface propsType extends withRouterProps {
 
 
 const Home: React.FC<any> = (props: propsType) => {
-  console.log(props.location.pathname);
+  const history = useHistory();
 
   const [data, setData] = useState<searchRes>();
   const [page, setPage] = useState<number>(1);
@@ -23,11 +24,25 @@ const Home: React.FC<any> = (props: propsType) => {
   const [searchValue, setSearchValue] = useState<string>('');
 
   useEffect(() => {
-    getGenre(setGenre);
+    const path = (props.location.search).split('=')[1];
+    if( path ) {
+      searchMovie(path, setData);
+      setSearchValue(path)
+    } else {
+      getGenre(setGenre);
+    }
   }, []);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
+  }
+
+  const handleClickSearch = (e: MouseEvent) => {
+    searchMovie(searchValue, setData);
+    if (searchValue) {
+      return history.push(`/?search=${searchValue}`)
+    }
+    history.push(`/`)
   }
 
   return (
@@ -37,7 +52,7 @@ const Home: React.FC<any> = (props: propsType) => {
           value={searchValue}
           action={{
             icon: "search",
-            onClick: () => searchMovie(searchValue, setData)
+            onClick: (e: MouseEvent) => handleClickSearch(e)
           }}
           placeholder='Search' 
           onChange={handleChange}

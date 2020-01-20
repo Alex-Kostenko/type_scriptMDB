@@ -16,13 +16,13 @@ const IMAGE_FALLBACK = 'https://via.placeholder.com/342x500';
 const MovieCard: React.FC<MovieCardProps> = ({ item, genre }) => {
   const getImageFallback = (url: post["poster_path"]) => {
     return url || IMAGE_FALLBACK;
-  }
+  };
 
   return (
     <Paper key={item.id}>
       <img
         src={getImageFallback(item.poster_path && `http://image.tmdb.org/t/p/w342${item.poster_path}`)}
-        alt=""
+        alt="posterImg"
         style={{ marginRight: '14px' }}
       />
       <Item.Content>
