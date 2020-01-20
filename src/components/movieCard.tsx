@@ -27,7 +27,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ item, genre }) => {
       />
       <Item.Content>
         <Title as='a'>
-          <div style={{ marginBottom: '10px' }}>{item.title}</div>
+          <div style={{ marginBottom: '10px', lineHeight: '1.1' }}>{item.title}</div>
           <StarRatingComponent
             value={item.vote_average / 2}
             editing={false}
