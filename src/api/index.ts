@@ -1,10 +1,9 @@
 import axios from 'axios';
 import {searchRes} from '../models/interfaces'
 import API_KEY, {domen} from '../API_KEY';
+const authAxios = axios.create();
 
 export const searchMovie = (value: string, setState: Function, page: number = 1, currentData?: searchRes , setPage?: Function) => {
-  const authAxios = axios.create();
-  
 
   authAxios.get(`${domen}/3/search/movie?api_key=${API_KEY}&language=en-US&page=${page}&include_adult=false&query="${value}"`)
     .then(res => {
@@ -22,7 +21,6 @@ export const searchMovie = (value: string, setState: Function, page: number = 1,
 
 
 export const getGenre = (setState: Function) => {
-  const authAxios = axios.create();
 
   authAxios.get(`${domen}/3/genre/movie/list?api_key=${API_KEY}&language=en-US`)
     .then(res => {
@@ -34,7 +32,6 @@ export const getGenre = (setState: Function) => {
 }
 
 export const getMovieById = (id: number) => {
-  const authAxios = axios.create();
 
   return authAxios.get(`${domen}/3/movie/${id}?language=en-US&api_key=${API_KEY}`)
     .then(res => {
