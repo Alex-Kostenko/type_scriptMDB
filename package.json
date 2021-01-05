@@ -17,7 +17,7 @@
     "@types/react-star-rating-component": "^1.4.0",
     "@types/semantic-ui": "^2.2.7",
     "@types/styled-components": "^4.4.2",
-    "axios": "^0.19.1",
+    "axios": "^0.21.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-history": "^0.18.2",
